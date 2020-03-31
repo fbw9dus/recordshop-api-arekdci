@@ -1,6 +1,18 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+
+const address = new Schema({
+  street: {
+    type: String,
+    required: true
+  },
+  city: {
+    type: String,
+    required: true
+  }
+})
+
 const UserSchema = new Schema(
   {
     firstName: {
@@ -18,7 +30,9 @@ const UserSchema = new Schema(
     password: {
       type: String,
       required: true
-    }
+    },
+
+    address: address
   },
   {
     toObject: {
@@ -30,8 +44,9 @@ const UserSchema = new Schema(
   }
 );
 
-UserSchema.virtual("fullName").get(function() {
+
+
+UserSchema.virtual("fullName").get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
-
 module.exports = mongoose.model("User", UserSchema);
